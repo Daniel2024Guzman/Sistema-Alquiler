@@ -5,6 +5,6 @@ class Auth extends CI_Controller {
     
 	public function index()
 	{
-		view('layouts/base');
+		view('auth/login');
 	}
 }
