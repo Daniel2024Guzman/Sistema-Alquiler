@@ -1,0 +1,56 @@
+-- Tabla de usuarios
+CREATE TABLE usuarios ( id INT AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(255) NOT NULL,a_paterno VARCHAR(255),a_materno VARCHAR(255),ci VARCHAR(255), email VARCHAR(255) NOT NULL UNIQUE, contraceña VARCHAR(255) NOT NULL, hash_key VARCHAR(255), hash_expiry VARCHAR(50), estado ENUM('activo', 'desactivo') DEFAULT 'activo' NOT NULL);
+
+-- Tabla de roles
+CREATE TABLE roles ( id INT AUTO_INCREMENT PRIMARY KEY, rol VARCHAR(255));
+
+-- Tabla de permisos
+CREATE TABLE permisos ( id INT AUTO_INCREMENT PRIMARY KEY, permiso VARCHAR(255) NOT NULL, descripcion VARCHAR(255) NOT NULL );
+-- Tabla de roles_usuarios (relación muchos a muchos)
+CREATE TABLE rol_usuario ( user_id INT, rol_id INT, PRIMARY KEY(user_id, rol_id), FOREIGN KEY(user_id) REFERENCES usuarios(id), FOREIGN KEY(rol_id) REFERENCES roles(id) );
+
+-- Tabla de permisos_roles (relación muchos a muchos)
+CREATE TABLE permiso_rol ( rol_id INT, permiso_id INT, PRIMARY KEY(rol_id, permiso_id), FOREIGN KEY(rol_id) REFERENCES roles(id), FOREIGN KEY(permiso_id) REFERENCES permisos(id) );
+
+--tabla de tipo_heramientas
+CREATE TABLE tipo_heramientas(id_th INT AUTO_INCREMENT PRIMARY KEY, th_descripcion VARCHAR(255) NOT NULL, th_estado ENUM('activo', 'desactivo') DEFAULT 'activo');
+
+--tabla de heramientas
+CREATE TABLE heramientas(id_heramienta INT AUTO_INCREMENT PRIMARY KEY, tipo_heramienta_id INT, FOREIGN KEY (tipo_heramienta_id) REFERENCES tipo_heramientas(id_th), h_nombre VARCHAR(255) NOT NULL, h_descripcion VARCHAR(255), h_marca VARCHAR(255), h_modelo VARCHAR(255), h_codigo VARCHAR(255), h_costo VARCHAR(255), h_estado ENUM('activo', 'inactivo') DEFAULT 'activo');
+
+--tabla de inventarios
+CREATE TABLE inventarios(id_inventario INT AUTO_INCREMENT PRIMARY KEY,  heramienta_id INT, FOREIGN KEY (heramienta_id) REFERENCES heramientas(id_heramienta), i_cantidad INT NOT NULL, i_estado ENUM('activo', 'inactivo') DEFAULT 'activo');
+
+--tabla de personas
+CREATE TABLE personas(id_persona INT AUTO_INCREMENT PRIMARY KEY, p_ci VARCHAR(255) NOT NULL, p_nombre VARCHAR(255) NOT NULL, p_paterno VARCHAR(255), p_materno VARCHAR(255), p_fecha_nacimiento VARCHAR(255), p_direccion VARCHAR(255) NOT NULL, p_foto VARCHAR(255) NOT NULL, p_celular VARCHAR(255) NOT NULL, p_email VARCHAR(255) NOT NULL, p_sexo ENUM('M', 'F', 'OTRO') DEFAULT 'OTRO', p_estado ENUM('activo', 'inactivo') DEFAULT 'activo');
+======================================================================================================================================================================
+INSERTAR DATOS
+
+INSERT INTO usuarios (nombre, a_paterno, a_materno, ci, email, contraceña, estado) VALUES ('Alex', 'Mamani', 'Llojlla', '12345678', 'looveyouuu10@gmail.com', '$2a$10$j4YA5toZ9Tu8.M2J7TnRuOFUynpiP52pRKtGOVLqX7PFyYB4F1U6q', 'activo'), ('María', 'López', 'Martínez', '87654321', 'b@b.com', '$2a$10$j4YA5toZ9Tu8.M2J7TnRuOFUynpiP52pRKtGOVLqX7PFyYB4F1U6q', 'activo');
+
+INSERT INTO roles (rol) VALUES ('admin'),('user');
+
+INSERT INTO permisos (permiso, descripcion) VALUES ('crear_usuarios', 'Permiso para crear usuarios'), ('eliminar_usuarios', 'Permiso para eliminar usuarios'), ('editar_usuarios', 'Permiso para editar usuarios'), ('ver_usuarios', 'Permiso para ver usuarios');
+INSERT INTO permisos (permiso, descripcion) VALUES ('crear_rol', 'Permiso para crear roles'), ('eliminar_roles', 'Permiso para eliminar roles'), ('editar_roles', 'Permiso para editar roles'), ('ver_roles', 'Permiso para ver roles');
+INSERT INTO permisos (permiso, descripcion) VALUES ('ver_perfil', 'Permiso para ver el perfil'), ('actualizar_datos', 'Permiso para actualizar el datos del perfil'), ('actualizar_password', 'Permiso para actualizar la contraceña desde el perfil');
+INSERT INTO permisos (permiso, descripcion) VALUES ('ver_heramienta', 'Permiso para ver la lista heramientas'), ('crear_heramienta', 'Permiso para crear heramientas'), ('editar_heramienta', 'Permiso para actualizar el datos de la heramienta'), ('eliminar_heramitas', 'Permiso para eliminar heramientas');
+INSERT INTO permisos (permiso, descripcion) VALUES ('ver_inventario', 'Permiso para ver la lista de inventario'), ('crear_inventario', 'Permiso para crear inventario'), ('editar_inventario', 'Permiso para actualizar la lista de inventario'), ('eliminar_inventario', 'Permiso para eliminar inventario');
+INSERT INTO permisos (permiso, descripcion) VALUES ('ver_persona', 'Permiso para ver la lista de clientes'), ('crear_persona', 'Permiso para crear cliente'), ('editar_persona', 'Permiso para actualizar clientes'), ('eliminar_persona', 'Permiso para eliminar cliente');
+
+/*INSERT INTO rol_usuario (user_id, rol_id) VALUES (1, 1),(2, 2);
+ -- Alex es admin
+ -- María es user
+
+INSERT INTO permiso_rol (rol_id, permiso_id)
+VALUES
+(1, 1), -- Admin tiene permiso para crear usuarios
+(1, 2), -- Admin tiene permiso para eliminar usuarios
+(1, 3), -- Admin tiene permiso para editar usuarios
+(1, 4), -- Admin tiene permiso para ver usuarios
+(2, 4); -- User tiene permiso para ver usuarios*/
+
+//INSERT INTO permiso_rol (rol_id, permiso_id) VALUES (1, 1), (1, 2), (1, 3), (1, 4), (2, 4);
+INSERT INTO permiso_rol (rol_id, permiso_id) SELECT (SELECT id FROM roles WHERE rol = 'admin'), id FROM permisos;
+
+INSERT INTO tipo_heramientas( th_descripcion, th_estado ) VALUES ('Obra fina','activo'), ('Obra gruesa','activo'), ('obra bruta','activo');
+INSERT INTO heramientas (tipo_heramienta_id, h_nombre, h_descripcion, h_marca, h_modelo, h_codigo, h_costo) VALUES (1, 'Taladro', 'Taladro eléctrico', 'Bosch', 'XYZ123', 'TL1234', '150.00');
