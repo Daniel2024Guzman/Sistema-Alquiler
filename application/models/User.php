@@ -21,4 +21,19 @@ class User extends CI_Model
         $query = $this->db->get();
         return $query->num_rows() > 0;
     }
+
+    public function getUserByEmailAndPassword($email, $contraceña)
+    {
+        $this->db->where('email', $email);
+        $this->db->where('estado', 'activo');
+
+        $query = $this->db->get('usuarios');
+        $user = $query->row();
+
+        if ($user && password_verify($contraceña, $user->contraceña)) {
+            return $user;
+        }
+
+        return false;
+    }
 }

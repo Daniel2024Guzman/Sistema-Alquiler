@@ -29,20 +29,19 @@
             <span>Panel</span>
           </a>
         </li>
-        
       </ul>
     </div>
     <div class="content w-full">
       <!-- Start Head -->
       <div class="head bg-theme p-15 between-flex">
         <div class="search p-relative">
-          <input class="p-10" type="search" placeholder="Type A Keyword" />
+          <input class="p-10" type="search" placeholder="Escribir" />
         </div>
         <div class="icons d-flex align-center">
           <span class="notification p-relative">
             <i class="fa-regular fa-bell fa-lg"></i>
           </span>
-          <img src="<?= base_url()?>assets/img/base/avatar.png" alt="" />
+          <img src="<?= base_url()?>assets/img/base/Usuarioremo.png" alt="usuario" />
         </div>
       </div>
       <!-- End Head -->
