@@ -11,7 +11,7 @@ class Auth extends CI_Controller {
     
 	public function index()
 	{
-		view('auth/login');
+		view('auth/reset_password');
 	}
 
 	public function login()
