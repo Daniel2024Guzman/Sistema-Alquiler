@@ -29,6 +29,12 @@
             <span>Panel</span>
           </a>
         </li>
+        <li>
+          <a class="d-flex align-center fs-14 rad-6 p-10" href="<?=base_url('Auth/logout') ?>">
+            <i class="fa-regular fa-user fa-fw"></i>
+            <span>Cerrar session</span>
+          </a>
+        </li>
       </ul>
     </div>
     <div class="content w-full">
@@ -41,10 +47,9 @@
           <span class="notification p-relative">
             <i class="fa-regular fa-bell fa-lg"></i>
           </span>
-          <img src="<?= base_url()?>assets/img/base/Usuarioremo.png" alt="usuario" />
+          <img src="<?= base_url()?>assets/img/base/Usuarioremo.png" alt="usuario" class="user-avatar" />
         </div>
-      </div>
-      <!-- End Head -->
+      </div>      <!-- End Head -->
       <h1 class="p-relative">@yield('titulo')</h1>
       @yield('contenido')
     </div>
