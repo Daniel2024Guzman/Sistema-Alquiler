@@ -19,10 +19,10 @@
                 <input id="email" placeholder="Email" type="email" name="email" required autofocus autocomplete="username" />
                 <input id="password" placeholder="Password" type="password" name="contraceña" required autocomplete="current-password" />
                 <a href="<?= base_url('Auth/forgotPassword') ?>">¿Olvidaste tu contraseña?</a>
-<!--es comúnmente utilizado para mostrar mensajes de error o advertencias en aplicaciones web desarrolladas con Laravel.-->
+<!--es comúnmente utilizado para mostrar mensajes de error o advertencias en aplicaciones web desarrolladas con Laravel.
                 @if (isset($error))
                     <p style="color: blue;">{{ $error }}</p>
-                @endif
+                @endif-->
                 <button type='submit' >INICIAR SESSION</button>
             </form>
         </div>
